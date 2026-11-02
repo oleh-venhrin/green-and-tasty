@@ -97,6 +97,14 @@ public sealed class GroupPreOrderStepDefinitions(Actor actor) : StepDefinitionBa
             await api.GetGroupSessionsAsync(NonExistentGroupId, bearerToken: token));
     }
 
+    [Then("the guest is told that the group could not be found")]
+    public async Task ThenTheGuestIsToldGroupNotFound()
+    {
+        var outcome = await Actor.AsksForAsync(new TheOutcome());
+        await Assert.That(outcome.Status == 404 || outcome.Status == 400 || outcome.Status == 403).IsTrue()
+            .Because($"expected 400/403/404 but got {outcome.Status}: {outcome.Body}");
+    }
+
     [When("the owner submits the group pre-order")]
     public Task WhenOwnerSubmitsTheGroupPreOrder() =>
         Actor.AttemptsToAsync(new SubmitTheGroupPreOrder());
