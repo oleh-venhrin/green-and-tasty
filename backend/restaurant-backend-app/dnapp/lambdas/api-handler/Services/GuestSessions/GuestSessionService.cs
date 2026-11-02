@@ -12,6 +12,7 @@ using APIHandler.Repositories.Auth;
 using APIHandler.Repositories.Dishes;
 using APIHandler.Repositories.GroupReservations;
 using APIHandler.Repositories.GuestSessions;
+using APIHandler.Repositories.Orders;
 using APIHandler.Repositories.Reservations;
 using APIHandler.Repositories.Tables;
 using System;
@@ -30,7 +31,8 @@ public class GuestSessionService(
     IDishRepository dishRepository,
     IReservationRepository reservationRepository,
     IUserRepository userRepository,
-    ITableRepository tableRepository) : IGuestSessionService
+    ITableRepository tableRepository,
+    IOrderRepository? orderRepository = null) : IGuestSessionService
 {
     public async Task<bool> IsAuthorizedAsync(string guestSessionToken, string guestSessionId)
     {
@@ -210,6 +212,8 @@ public class GuestSessionService(
             await guestSessionRepository.SaveAsync(ownerSession);
         }
 
+        await TrySyncOwnerDishesFromOrderAsync(ownerSession, reservationId);
+
         return new GetOwnerGuestSessionResponse(ownerSession.Id);
     }
 
@@ -233,6 +237,19 @@ public class GuestSessionService(
     private async Task<GetAllSessionsResponse> BuildAllSessionsResponseAsync(string groupReservationId)
     {
         var sessions = await guestSessionRepository.GetAllByGroupReservationIdAsync(groupReservationId);
+
+        if (orderRepository != null)
+        {
+            var ownerSession = sessions.FirstOrDefault(s => s.IsOwnerSession);
+            if (ownerSession != null && (ownerSession.Dishes == null || !ownerSession.Dishes.Any()))
+            {
+                var group = await groupReservationRepository.GetGroupReservationByIdAsync(groupReservationId);
+                if (group != null && !string.IsNullOrEmpty(group.ReservationId))
+                {
+                    await TrySyncOwnerDishesFromOrderAsync(ownerSession, group.ReservationId);
+                }
+            }
+        }
 
         var dishIds = sessions
             .SelectMany(s => s.Dishes)
@@ -265,6 +282,32 @@ public class GuestSessionService(
         }
 
         return new GetAllSessionsResponse(participants, participants.Sum(p => p.Total));
+    }
+
+    private async Task TrySyncOwnerDishesFromOrderAsync(GuestSession ownerSession, string reservationId)
+    {
+        if (orderRepository == null) return;
+        if (ownerSession.Dishes != null && ownerSession.Dishes.Any()) return;
+
+        try
+        {
+            var order = await orderRepository.GetOrderByReservationIdAsync(reservationId);
+            if (order != null && order.Dishes != null && order.Dishes.Any())
+            {
+                ownerSession.Dishes = order.Dishes.Select(d => new OrderItem
+                {
+                    DishId = d.DishId,
+                    Quantity = d.Quantity,
+                    State = d.State
+                }).ToList();
+                ownerSession.IsSubmitted = true;
+                await guestSessionRepository.SaveAsync(ownerSession);
+            }
+        }
+        catch
+        {
+            // Fail safely without disrupting the group pre-order flow
+        }
     }
     public async Task SubmitCartAsync(string guestSessionId)
     {
