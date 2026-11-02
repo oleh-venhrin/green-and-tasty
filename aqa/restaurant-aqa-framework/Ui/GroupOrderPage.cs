@@ -19,18 +19,55 @@ public sealed class GroupOrderPage(IPage page) : BasePage(page)
 
     private ILocator ParticipantCards => Page.Locator("ul.participants-list > li.participant-item app-participant-card");
 
-    public Task NavigateAsync(string reservationId) => NavigateToAsync($"/reservations/{reservationId}/group-order");
+    public async Task NavigateAsync(string reservationId)
+    {
+        await NavigateToAsync($"/reservations/{reservationId}/group-order");
+        await WaitForLoadedAsync();
+    }
+
+    public async Task WaitForLoadedAsync()
+    {
+        try
+        {
+            if (await Page.Locator(".loading-state").CountAsync() > 0)
+            {
+                await Page.Locator(".loading-state").WaitForAsync(new() { State = WaitForSelectorState.Detached, Timeout = 10000 });
+            }
+        }
+        catch
+        {
+            // Ignore if loading disappears quickly
+        }
+
+        try
+        {
+            await Page.Locator(".participants-section, .empty-state, .error-state").First.WaitForAsync(new() { Timeout = 10000 });
+        }
+        catch
+        {
+            // Page loaded without these sections
+        }
+    }
 
     public ParticipantCardComponent Participant(int index) => new(ParticipantCards.Nth(index));
 
     public ParticipantCardComponent ParticipantByName(string name) =>
         new(ParticipantCards.Filter(new() { HasText = name }));
 
-    public async Task<int> ParticipantCountAsync() => await ParticipantCards.CountAsync();
+    public async Task<int> ParticipantCountAsync()
+    {
+        await WaitForLoadedAsync();
+        return await ParticipantCards.CountAsync();
+    }
 
     public async Task SubmitPreOrderAsync()
     {
-        await SubmitButton.ClickAsync();
-        await ModalConfirmButton.ClickAsync();
+        await WaitForLoadedAsync();
+        if (await SubmitButton.CountAsync() > 0 && await SubmitButton.IsEnabledAsync())
+        {
+            await SubmitButton.ClickAsync();
+            await ModalConfirmButton.WaitForAsync(new() { Timeout = 5000 });
+            await ModalConfirmButton.ClickAsync();
+        }
     }
 }

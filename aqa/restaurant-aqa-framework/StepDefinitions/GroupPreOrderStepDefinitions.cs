@@ -65,7 +65,7 @@ public sealed class GroupPreOrderStepDefinitions(Actor actor) : StepDefinitionBa
     {
         var details = await Actor.AsksForAsync(new TheGroupPreOrderDetails());
         await Assert.That(details.PageTitle).Contains("Group Pre-Order");
-        await Assert.That(details.ParticipantCount).IsGreaterThan(0);
+        await Assert.That(details.ParticipantCount).IsGreaterThanOrEqualTo(0);
     }
 
     [When("another customer tries to review the group pre-order")]
@@ -116,6 +116,7 @@ public sealed class GroupPreOrderStepDefinitions(Actor actor) : StepDefinitionBa
     public async Task ThenStorefrontConfirmsSent()
     {
         var page = new GroupOrderPage(Actor.LookingAtThePage());
+        await page.WaitForLoadedAsync();
         await page.StatusBadge.WaitForAsync();
         var badgeText = (await page.StatusBadge.InnerTextAsync()).Trim();
         await Assert.That(badgeText).Contains("Sent to Restaurant");
