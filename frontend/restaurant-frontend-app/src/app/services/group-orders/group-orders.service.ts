@@ -6,8 +6,8 @@ import { SKIP_ERROR_TOAST } from '@app/auth/skip-error-toast.context';
 import { GuestInvite } from '@app/models/reservations/guest-invite.model';
 import { GroupSessionsResponse } from '@app/models/group-orders/group-sessions-response.model';
 import { GroupStatusResponse } from '@app/models/group-orders/group-status.model';
-import { OwnerSession } from '@app/models/group-orders/owner-session.model';
-import { SubmitGroupOrderDish } from '@app/models/group-orders/submit-group-pre-order.model';
+import { OwnerSessionResponse } from '@app/models/group-orders/owner-session.model';
+import { SubmittedDish } from '@app/models/group-orders/submit-group-pre-order.model';
 
 export interface RequestOptions {
   silent?: boolean;
@@ -42,7 +42,7 @@ export class GroupOrdersService {
 
   getOwnerSessionId$(reservationId: string): Observable<string> {
     return this.http
-      .get<OwnerSession>(`${this.baseUrl}/reservations/${reservationId}/guest-session-id`)
+      .get<OwnerSessionResponse>(`${this.baseUrl}/reservations/${reservationId}/guest-session-id`)
       .pipe(map((res) => res.guestSessionId));
   }
 
@@ -52,8 +52,8 @@ export class GroupOrdersService {
     });
   }
 
-  submit$(groupId: string, reservationId: string): Observable<SubmitGroupOrderDish[]> {
-    return this.http.post<SubmitGroupOrderDish[]>(`${this.baseUrl}/group-reservations/${groupId}/submit`, {
+  submit$(groupId: string, reservationId: string): Observable<SubmittedDish[]> {
+    return this.http.post<SubmittedDish[]>(`${this.baseUrl}/group-reservations/${groupId}/submit`, {
       reservationId,
     });
   }
