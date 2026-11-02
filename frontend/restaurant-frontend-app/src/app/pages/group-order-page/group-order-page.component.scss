@@ -3,7 +3,7 @@
 .page {
   min-height: 100vh;
   padding: 40px 16px 80px;
-  background-color: #f9fafb;
+  background-color: color.$neutral-100;
 }
 
 .page-container {
@@ -31,7 +31,7 @@
     margin: 0;
     font-size: 2rem;
     font-weight: 700;
-    color: color.$black;
+    color: color.$neutral-900;
   }
 }
 
@@ -58,7 +58,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  color: color.$gray-dark;
+  color: color.$neutral-600;
   font-size: 0.95rem;
 
   .meta-item {
@@ -86,12 +86,12 @@
 }
 
 .empty-state {
-  background: color.$white;
+  background: color.$neutral-0;
   padding: 32px;
   border-radius: 12px;
   text-align: center;
-  color: color.$gray-dark;
-  border: 1px dashed color.$gray-light;
+  color: color.$neutral-600;
+  border: 1px dashed color.$neutral-200;
 
   p {
     margin: 0;
@@ -112,7 +112,7 @@
 
   .error-text {
     margin: 0;
-    color: #b91c1c;
+    color: color.$red-400;
     font-weight: 500;
   }
 }
@@ -120,21 +120,21 @@
 .loading-state {
   padding: 40px;
   text-align: center;
-  color: color.$gray-dark;
+  color: color.$neutral-600;
 }
 
 .consolidated-section {
-  background: color.$white;
+  background: color.$neutral-0;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  border: 1px solid color.$gray-light;
+  border: 1px solid color.$neutral-200;
 
   h2 {
     margin: 0 0 16px;
     font-size: 1.25rem;
     font-weight: 600;
-    color: color.$black;
+    color: color.$neutral-900;
   }
 
   .consolidated-list {
@@ -151,7 +151,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid color.$gray-light;
+    border-bottom: 1px solid color.$neutral-200;
 
     &:last-child {
       border-bottom: none;
@@ -159,12 +159,12 @@
 
     .dish-title {
       font-weight: 500;
-      color: color.$black;
+      color: color.$neutral-900;
     }
 
     .dish-cost {
       font-weight: 600;
-      color: color.$black;
+      color: color.$neutral-900;
     }
   }
 }
@@ -174,7 +174,7 @@
     margin: 0 0 16px;
     font-size: 1.25rem;
     font-weight: 600;
-    color: color.$black;
+    color: color.$neutral-900;
   }
 
   .participants-list {
@@ -192,11 +192,11 @@
 }
 
 .order-footer {
-  background: color.$white;
+  background: color.$neutral-0;
   padding: 24px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  border: 1px solid color.$gray-light;
+  border: 1px solid color.$neutral-200;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -209,11 +209,11 @@
     font-weight: 700;
 
     .label {
-      color: color.$black;
+      color: color.$neutral-900;
     }
 
     .total-amount {
-      color: color.$green-primary;
+      color: color.$green-600;
     }
   }
 
@@ -223,19 +223,19 @@
     border-radius: 8px;
     font-size: 1.1rem;
     font-weight: 600;
-    background-color: color.$green-primary;
-    color: color.$white;
+    background-color: color.$green-400;
+    color: color.$neutral-0;
     border: none;
     cursor: pointer;
     transition: background-color 0.2s ease;
 
     &:hover:not(:disabled) {
-      background-color: #27ae60;
+      background-color: color.$green-600;
     }
 
     &:disabled {
-      background-color: #d1d5db;
-      color: #9ca3af;
+      background-color: color.$neutral-200;
+      color: color.$neutral-400;
       cursor: not-allowed;
     }
   }
@@ -246,7 +246,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: 0.85rem;
-  color: color.$gray-dark;
+  color: color.$neutral-600;
   padding: 8px 12px;
 
   .sync-error {
@@ -255,15 +255,15 @@
 
   .btn-refresh {
     background: none;
-    border: 1px solid color.$gray-light;
+    border: 1px solid color.$neutral-200;
     border-radius: 6px;
     padding: 4px 10px;
     cursor: pointer;
-    color: color.$black;
+    color: color.$neutral-900;
     font-size: 0.85rem;
 
     &:hover {
-      background-color: #f3f4f6;
+      background-color: color.$neutral-100;
     }
   }
 }
@@ -283,29 +283,29 @@
     border: none;
 
     &--secondary {
-      background-color: #f3f4f6;
-      color: color.$black;
+      background-color: color.$neutral-100;
+      color: color.$neutral-900;
 
       &:hover {
-        background-color: #e5e7eb;
+        background-color: color.$neutral-200;
       }
     }
 
     &--primary {
-      background-color: color.$green-primary;
-      color: color.$white;
+      background-color: color.$green-400;
+      color: color.$neutral-0;
 
       &:hover {
-        background-color: #27ae60;
+        background-color: color.$green-600;
       }
     }
 
     &--danger {
-      background-color: #ef4444;
-      color: color.$white;
+      background-color: color.$red-400;
+      color: color.$neutral-0;
 
       &:hover {
-        background-color: #dc2626;
+        background-color: #8b0000;
       }
     }
   }

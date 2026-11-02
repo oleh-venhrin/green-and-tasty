@@ -1,11 +1,11 @@
 @use 'app/shared/styles/abstracts/colors' as color;
 
 .card {
-  background: color.$white;
+  background: color.$neutral-0;
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  border: 1px solid color.$gray-light;
+  border: 1px solid color.$neutral-200;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -29,7 +29,7 @@
   margin: 0;
   font-size: 1.15rem;
   font-weight: 600;
-  color: color.$black;
+  color: color.$neutral-900;
 }
 
 .status-badge {
@@ -49,8 +49,8 @@
 
 .remove-guest-btn {
   background: none;
-  border: 1px solid #ef4444;
-  color: #ef4444;
+  border: 1px solid color.$red-400;
+  color: color.$red-400;
   border-radius: 6px;
   padding: 4px 10px;
   font-size: 0.85rem;
@@ -77,7 +77,7 @@
   align-items: center;
   gap: 12px;
   padding: 8px 0;
-  border-bottom: 1px solid color.$gray-light;
+  border-bottom: 1px solid color.$neutral-200;
 
   &:last-child {
     border-bottom: none;
@@ -95,8 +95,8 @@
   width: 40px;
   height: 40px;
   border-radius: 8px;
-  background-color: color.$green-primary;
-  color: color.$white;
+  background-color: color.$green-400;
+  color: color.$neutral-0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,17 +112,17 @@
 
 .dish-name {
   font-weight: 500;
-  color: color.$black;
+  color: color.$neutral-900;
 }
 
 .dish-qty {
   font-size: 0.85rem;
-  color: color.$gray-dark;
+  color: color.$neutral-600;
 }
 
 .dish-total {
   font-weight: 600;
-  color: color.$black;
+  color: color.$neutral-900;
 }
 
 .card-subtotal {
@@ -130,17 +130,17 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 12px;
-  border-top: 1px dashed color.$gray-light;
+  border-top: 1px dashed color.$neutral-200;
   font-weight: 600;
 
   .subtotal-amount {
-    color: color.$green-primary;
+    color: color.$green-600;
     font-size: 1.05rem;
   }
 }
 
 .no-dishes {
   margin: 0;
-  color: color.$gray-dark;
+  color: color.$neutral-600;
   font-style: italic;
 }
