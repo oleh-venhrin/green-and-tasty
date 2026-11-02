@@ -1,5 +1,19 @@
 # Restaurant AQA framework
 
+## Обраний напрям та підхід (EPAM IT Marathon 2026)
+
+- **Напрям тестування:** **Напрям 1 · Груповий pre-order (Group Pre-Order)**
+- **Об'єкт тестування:** Власний інтегрований та розгорнутий стек:
+  - Frontend: `https://dd55jazix0ytj.cloudfront.net` (AWS CloudFront + S3)
+  - Backend API: `https://7buunq3yi4.execute-api.us-west-2.amazonaws.com/develop` (AWS API Gateway + .NET 10 Lambda + DynamoDB)
+- **Архітектурний підхід:** **BDD (Reqnroll / Gherkin) + Screenplay Pattern** (Actors, Tasks, Questions, Abilities) + **Microsoft Playwright** для UI + **TUnit** для асертів.
+- **Покриття рівнів складності (`Features/GroupPreOrder.feature`):**
+  - **1-й рівень (L1):** Перегляд учасників групового pre-order (Owner бачить учасників, кількості страв, підсумки, банер неоформлених кошиків; перевірка відмови не-власникам і для неіснуючих груп).
+  - **2-й рівень (L2):** Підтвердження консолідованого pre-order (Owner підтверджує замовлення через інтерфейс та API; перевірка статусу `Sent to Restaurant`, відмови при відсутності підтверджених кошиків чи відмові не-власникам).
+  - **3-й рівень (L3):** Видалення учасника з групи (Owner видаляє гостя як через UI, так і через API; автоматичний перерахунок суми, перевірка відмови видалення чужих чи неіснуючих сесій).
+
+---
+
 End-to-end tests for the Green & Tasty restaurant application: Reqnroll (Gherkin) + TUnit + Playwright for .NET, with the Screenplay pattern.
 
 Guidance for extending the suite (writing Gherkin, steps, Screenplay, test data, working with an AI assistant) is in [CLAUDE.md](CLAUDE.md).
