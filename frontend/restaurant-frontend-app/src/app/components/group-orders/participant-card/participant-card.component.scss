@@ -1,0 +1,146 @@
+@use 'src/app/shared/styles/abstracts/colors' as color;
+
+.card {
+  background: color.$white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid color.$gray-light;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: color.$black;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background-color: #fef3c7;
+  color: #92400e;
+
+  &--submitted {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+}
+
+.remove-guest-btn {
+  background: none;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #fef2f2;
+  }
+}
+
+.dish-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dish-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid color.$gray-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.dish-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.dish-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: color.$green-primary;
+  color: color.$white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.dish-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dish-name {
+  font-weight: 500;
+  color: color.$black;
+}
+
+.dish-qty {
+  font-size: 0.85rem;
+  color: color.$gray-dark;
+}
+
+.dish-total {
+  font-weight: 600;
+  color: color.$black;
+}
+
+.card-subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px dashed color.$gray-light;
+  font-weight: 600;
+
+  .subtotal-amount {
+    color: color.$green-primary;
+    font-size: 1.05rem;
+  }
+}
+
+.no-dishes {
+  margin: 0;
+  color: color.$gray-dark;
+  font-style: italic;
+}
