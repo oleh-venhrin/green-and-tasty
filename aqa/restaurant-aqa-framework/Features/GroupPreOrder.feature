@@ -51,16 +51,16 @@ Feature: Group Pre-Order
 
   Rule: The owner can submit the consolidated pre-order
 
-    @api @smoke
-    Scenario: The owner submits the group pre-order through the service
-      When the owner submits the group pre-order
-      Then the group pre-order is submitted
-
     @ui @smoke
     Scenario: The owner submits the group pre-order on the storefront
       Given the owner has opened the group pre-order page
       When the owner submits the pre-order through the form
       Then the storefront confirms the pre-order is sent to the restaurant
+
+    @api @smoke
+    Scenario: The owner submits the group pre-order through the service
+      When the owner submits the group pre-order
+      Then the group pre-order is submitted
 
     @api @negative
     Scenario: Submitting by someone other than the owner is refused

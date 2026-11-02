@@ -181,7 +181,17 @@ public sealed class GroupPreOrderStepDefinitions(Actor actor) : StepDefinitionBa
     public async Task ThenGuestIsRemovedFromList()
     {
         var page = new GroupOrderPage(Actor.LookingAtThePage());
-        await page.RefreshButton.ClickAsync();
+        await page.WaitForLoadedAsync();
+        var andriiCard = page.ParticipantByName("Andrii");
+        try
+        {
+            await andriiCard.Root.WaitForAsync(new() { State = Microsoft.Playwright.WaitForSelectorState.Detached, Timeout = 5000 });
+        }
+        catch
+        {
+            // Best effort wait
+        }
+        await Assert.That(await andriiCard.Root.CountAsync()).IsEqualTo(0);
     }
 
     [When("the owner tries to remove an invalid guest from the group")]

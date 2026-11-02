@@ -10,3 +10,4 @@ public sealed class TheGroupSessions : IQuestion<GroupSessionsResponseDto>
         return Task.FromResult(response.Json<GroupSessionsResponseDto>());
     }
 }
+

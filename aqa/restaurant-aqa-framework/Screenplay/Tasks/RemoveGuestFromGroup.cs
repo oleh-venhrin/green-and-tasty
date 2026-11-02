@@ -33,3 +33,4 @@ public sealed class RemoveGuestFromGroup(
             await api.RemoveGuestSessionAsync(grpId, session.SessionId, token));
     }
 }
+

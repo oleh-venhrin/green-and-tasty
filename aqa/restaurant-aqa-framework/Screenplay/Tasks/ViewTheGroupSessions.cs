@@ -18,3 +18,4 @@ public sealed class ViewTheGroupSessions(string? groupId = null, string? bearerT
             await api.GetGroupSessionsAsync(grpId, token));
     }
 }
+

@@ -12,3 +12,4 @@ public sealed class OpenTheGroupOrderPage(string? reservationId = null) : ITask
         await page.NavigateAsync(resId);
     }
 }
+

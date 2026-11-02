@@ -26,3 +26,4 @@ public sealed class TheGroupPreOrderDetails : IQuestion<GroupPreOrderUiDetails>
         return new GroupPreOrderUiDetails(title, badge, total, count, warning);
     }
 }
+
