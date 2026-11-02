@@ -66,8 +66,16 @@ public sealed class GroupOrderPage(IPage page) : BasePage(page)
         if (await SubmitButton.CountAsync() > 0 && await SubmitButton.IsEnabledAsync())
         {
             await SubmitButton.ClickAsync();
-            await ModalConfirmButton.WaitForAsync(new() { Timeout = 5000 });
+            await ModalConfirmButton.WaitForAsync(new() { State = WaitForSelectorState.Visible, Timeout = 5000 });
             await ModalConfirmButton.ClickAsync();
+            try
+            {
+                await Page.WaitForResponseAsync(r => r.Url.Contains("/submit"), new() { Timeout = 10000 });
+            }
+            catch
+            {
+                // In case the response completes very quickly
+            }
         }
     }
 }
