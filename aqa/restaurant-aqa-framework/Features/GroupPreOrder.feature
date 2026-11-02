@@ -1,3 +1,4 @@
+@group-preorder
 Feature: Group Pre-Order
 
   Guests invited to a booking can each assemble their own pre-order dishes.
