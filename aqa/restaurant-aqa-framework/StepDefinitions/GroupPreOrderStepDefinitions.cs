@@ -125,8 +125,16 @@ public sealed class GroupPreOrderStepDefinitions(Actor actor) : StepDefinitionBa
     {
         var page = new GroupOrderPage(Actor.LookingAtThePage());
         await page.WaitForLoadedAsync();
-        await page.StatusBadge.WaitForAsync();
-        var badgeText = (await page.StatusBadge.InnerTextAsync()).Trim();
+        var badge = Actor.LookingAtThePage().Locator("header.page-header .badge");
+        try
+        {
+            await badge.Filter(new() { HasText = "Sent to Restaurant" }).WaitForAsync(new() { Timeout = 15000 });
+        }
+        catch
+        {
+            // Fallback to checking inner text directly
+        }
+        var badgeText = (await badge.InnerTextAsync()).Trim();
         await Assert.That(badgeText).Contains("Sent to Restaurant");
     }
 
@@ -146,7 +154,7 @@ public sealed class GroupPreOrderStepDefinitions(Actor actor) : StepDefinitionBa
     public async Task WhenOwnerRemovesGuestFromGroup()
     {
         // First ensure a removable guest exists
-        const string guestName = "AQA-RemovableGuest";
+        var guestName = $"Guest-{Guid.NewGuid():N}"[..12];
         await Actor.AttemptsToAsync(new JoinGroupAsGuest(guestName, "dish-01", 1, submitCart: true));
         await Actor.AttemptsToAsync(new RemoveGuestFromGroup(guestName));
     }

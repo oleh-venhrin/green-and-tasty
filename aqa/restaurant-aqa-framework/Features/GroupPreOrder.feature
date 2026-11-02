@@ -31,24 +31,6 @@ Feature: Group Pre-Order
       When someone tries to review a non-existent group pre-order
       Then the guest is told that the group could not be found
 
-  Rule: The owner can submit the consolidated pre-order
-
-    @api @smoke
-    Scenario: The owner submits the group pre-order through the service
-      When the owner submits the group pre-order
-      Then the group pre-order is submitted
-
-    @ui @smoke
-    Scenario: The owner submits the group pre-order on the storefront
-      Given the owner has opened the group pre-order page
-      When the owner submits the pre-order through the form
-      Then the storefront confirms the pre-order is sent to the restaurant
-
-    @api @negative
-    Scenario: Submitting by someone other than the owner is refused
-      When another customer tries to submit the group pre-order
-      Then access is refused
-
   Rule: The owner can remove a guest from the group
 
     @api @smoke
@@ -66,3 +48,21 @@ Feature: Group Pre-Order
     Scenario: Removing a guest that does not belong to the group is refused
       When the owner tries to remove an invalid guest from the group
       Then the removal is refused
+
+  Rule: The owner can submit the consolidated pre-order
+
+    @api @smoke
+    Scenario: The owner submits the group pre-order through the service
+      When the owner submits the group pre-order
+      Then the group pre-order is submitted
+
+    @ui @smoke
+    Scenario: The owner submits the group pre-order on the storefront
+      Given the owner has opened the group pre-order page
+      When the owner submits the pre-order through the form
+      Then the storefront confirms the pre-order is sent to the restaurant
+
+    @api @negative
+    Scenario: Submitting by someone other than the owner is refused
+      When another customer tries to submit the group pre-order
+      Then access is refused

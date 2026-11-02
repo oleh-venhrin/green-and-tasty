@@ -11,5 +11,18 @@ public sealed class ParticipantCardComponent(ILocator root)
     public ILocator RemoveButton => root.Locator("button.remove-guest-btn");
     public ILocator Dishes => root.Locator("ul.dish-list > li.dish-item");
 
-    public Task RemoveAsync() => RemoveButton.ClickAsync();
+    public async Task RemoveAsync()
+    {
+        await RemoveButton.ClickAsync();
+        var confirmButton = Root.Page.Locator("app-modal button.btn--danger");
+        try
+        {
+            await confirmButton.WaitForAsync(new() { Timeout = 5000 });
+            await confirmButton.ClickAsync();
+        }
+        catch
+        {
+            // Modal did not appear or already dismissed
+        }
+    }
 }
