@@ -1,4 +1,4 @@
-﻿using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DataModel;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using APIHandler.Constants;
@@ -61,6 +61,7 @@ public class GetAllDishesHandler : IApiRequestHandler
                 .GetRemainingAsync();
 
             popularityMap = orders
+                .Where(o => o.Dishes != null)
                 .SelectMany(o => o.Dishes)
                 .GroupBy(item => item.DishId)
                 .ToDictionary(g => g.Key, g => g.Count());
