@@ -20,7 +20,12 @@ public sealed class SetUpGroupReservation(string? reservationId = null) : ITask
             DateTime.UtcNow.AddDays(2),
             DateTime.UtcNow.AddDays(2).AddHours(2),
             10,
-            ReservationStatus.Reserved);
+            ReservationStatus.Reserved,
+            "5861b310-60e1-700f-ca31-b915eb410490",
+            "waiter-01",
+            "12 Rustaveli Avenue, Tbilisi",
+            "Green & Tasty",
+            false);
 
         actor.Remember(res);
         actor.Remember(new InviteTokenResponse(DefaultToken));
