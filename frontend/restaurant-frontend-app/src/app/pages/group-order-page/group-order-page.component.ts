@@ -11,7 +11,7 @@ import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, Subscription, timer } from 'rxjs';
-import { exhaustMap, filter, takeUntil } from 'rxjs/operators';
+import { exhaustMap, filter } from 'rxjs/operators';
 import { GroupOrdersService } from '@app/services/group-orders/group-orders.service';
 import { ToastService } from '@app/services/toast/toast.service';
 import { GuestInvite } from '@app/models/reservations/guest-invite.model';
@@ -115,7 +115,7 @@ export class GroupOrderPageComponent implements OnInit {
 
         this.service.getOwnerSessionId$(resId).subscribe({
           next: (ownerId) => this.ownerSessionId.set(ownerId),
-          error: () => {},
+          error: () => undefined,
         });
 
         this.service.getStatus$(groupId).subscribe({
@@ -125,7 +125,7 @@ export class GroupOrderPageComponent implements OnInit {
               this.startPolling(groupId);
             }
           },
-          error: () => {},
+          error: () => undefined,
         });
 
         this.service.getSessions$(groupId).subscribe({
@@ -204,7 +204,7 @@ export class GroupOrderPageComponent implements OnInit {
           this.stopPolling();
         }
       },
-      error: () => {},
+      error: () => undefined,
     });
   }
 
