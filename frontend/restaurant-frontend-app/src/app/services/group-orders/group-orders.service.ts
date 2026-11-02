@@ -44,9 +44,9 @@ export class GroupOrdersService {
       return { participants: [], total: 0 };
     }
     const r = raw as Record<string, unknown>;
-    const rawParticipants = (r['participants'] ?? r['Participants'] ?? []) as Array<Record<string, unknown>>;
+    const rawParticipants = (r['participants'] ?? r['Participants'] ?? []) as Record<string, unknown>[];
     const participants: Participant[] = rawParticipants.map((p) => {
-      const rawItems = (p['items'] ?? p['Items'] ?? []) as Array<Record<string, unknown>>;
+      const rawItems = (p['items'] ?? p['Items'] ?? []) as Record<string, unknown>[];
       return {
         id: (p['id'] ?? p['Id'] ?? '') as string,
         type: ((p['type'] ?? p['Type'] ?? 'Guest') as string) === 'Owner' ? 'Owner' : 'Guest',
